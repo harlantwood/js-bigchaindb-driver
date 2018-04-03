@@ -18,11 +18,13 @@ jobs:
 
       - run: .ci/travis-before-script.sh
 
-      # - run: gem install cowsay
-      - run: sudo npm install -g codecov
-
-      - run:  yarn
-      # - run:  yarn test
+      - run:
+          name: docker-compose logs
+          command: |
+            set -x
+            cd ~/bigchaindb
+            docker-compose logs -f -t >> ${ARTIFACTS}/docker-compose.log
+          background: true
 
       - run:
           name: install dockerize
@@ -32,6 +34,12 @@ jobs:
       - run: dockerize -wait tcp://localhost:9984 -timeout 10m
 
       - run:  curl http://localhost:9984
+
+      # - run: gem install cowsay
+      - run: sudo npm install -g codecov
+
+      - run:  yarn
+      - run:  yarn test
 
       - store_artifacts:
           path: ${ARTIFACTS}
