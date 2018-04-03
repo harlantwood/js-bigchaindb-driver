@@ -1,5 +1,4 @@
 #!/bin/bash
-
-set -e -x
+set -ex
 
 docker-compose build --no-cache bigchaindb

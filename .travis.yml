@@ -26,7 +26,10 @@ before_script:
   - gem install cowsay
   - npm install -g codecov
 
-script: yarn test
+script:
+  - curl http://localhost:9984
+  - yarn
+  - yarn test
 
 notifications:
     email: false
