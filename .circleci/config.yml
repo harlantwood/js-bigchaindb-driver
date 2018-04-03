@@ -40,6 +40,11 @@ jobs:
       - run:  yarn
       - run:  yarn test
 
+      - run:
+          name: "Failure: output container logs to console"
+          command: docker-compose logs
+          when: on_fail
+
       - store_artifacts:
           path: ${ARTIFACTS}
           destination: artifacts
