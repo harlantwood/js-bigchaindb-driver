@@ -2,4 +2,4 @@
 
 set -e -x
 
-docker-compose up -d bigchaindb
+docker-compose up --always-recreate-deps --force-recreate -d bigchaindb

@@ -1,4 +1,4 @@
 #!/bin/bash
 set -ex
 
-docker-compose build --no-cache bigchaindb
+docker-compose build --pull --no-cache bigchaindb
