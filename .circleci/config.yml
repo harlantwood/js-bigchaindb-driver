@@ -21,6 +21,7 @@ jobs:
       # - run: gem install cowsay
       - run: sudo npm install -g codecov
 
+      - run:  yarn
       - run:  yarn test
 
       - run:
