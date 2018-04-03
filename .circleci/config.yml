@@ -19,24 +19,21 @@ jobs:
       - run: .ci/travis-before-script.sh
 
       - run:
-          name: docker-compose logs
-          command: |
-            set -x
-            docker-compose logs -f -t >> ${ARTIFACTS}/docker-compose.log
-          background: true
-
-      - run:
           name: install dockerize
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
             DOCKERIZE_VERSION: v0.6.1
-      - run: dockerize -wait tcp://localhost:9984 -timeout 120s
+      - run: dockerize -wait tcp://localhost:9984 -timeout 60s
 
       - run:  curl http://localhost:9984
 
       - run:
           name: "Failure: output container logs to console"
-          command: docker-compose logs --tail="all"
+          command: |
+              set -x
+              docker-compose logs --tail="all" bigchaindb
+              docker-compose logs --tail="all" tendermint
+              docker-compose logs --tail="all" mongodb
           when: on_fail
 
       # # - run: gem install cowsay
