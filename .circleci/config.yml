@@ -22,7 +22,7 @@ jobs:
       - run: sudo npm install -g codecov
 
       - run:  yarn
-      - run:  yarn test
+      # - run:  yarn test
 
       - run:
           name: install dockerize
