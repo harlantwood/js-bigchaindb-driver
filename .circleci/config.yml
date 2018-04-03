@@ -30,20 +30,20 @@ jobs:
           command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
           environment:
             DOCKERIZE_VERSION: v0.6.1
-      - run: dockerize -wait tcp://localhost:9984 -timeout 10m
+      - run: dockerize -wait tcp://localhost:9984 -timeout 30s
 
       - run:  curl http://localhost:9984
-
-      # - run: gem install cowsay
-      - run: sudo npm install -g codecov
-
-      - run:  yarn
-      - run:  yarn test
 
       - run:
           name: "Failure: output container logs to console"
           command: docker-compose logs
           when: on_fail
+
+      # # - run: gem install cowsay
+      # - run: sudo npm install -g codecov
+      #
+      # - run:  yarn
+      # - run:  yarn test
 
       - store_artifacts:
           path: ${ARTIFACTS}

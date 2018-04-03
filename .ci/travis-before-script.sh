@@ -2,4 +2,4 @@
 
 set -e -x
 
-docker-compose up -d bigchaindb
+docker-compose run -d bigchaindb
