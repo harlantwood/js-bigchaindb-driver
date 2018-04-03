@@ -22,7 +22,6 @@ jobs:
           name: docker-compose logs
           command: |
             set -x
-            cd ~/bigchaindb
             docker-compose logs -f -t >> ${ARTIFACTS}/docker-compose.log
           background: true
 
