@@ -36,7 +36,7 @@ jobs:
 
       - run:
           name: "Failure: output container logs to console"
-          command: docker-compose logs
+          command: docker-compose logs --tail="all"
           when: on_fail
 
       # # - run: gem install cowsay
