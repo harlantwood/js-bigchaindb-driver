@@ -2,21 +2,13 @@ version: 2
 jobs:
   build:
     working_directory: ~/app
-    environment:
-      ARTIFACTS: /tmp/artifacts
     machine: true
       # - image: circleci/node:8
     steps:
       - checkout
-      - run: mkdir ${ARTIFACTS}
 
-      - run: .ci/travis-before-install.sh
-
-      - setup_remote_docker
-
-      - run: .ci/travis-install.sh
-
-      - run: .ci/travis-before-script.sh
+      - run: docker-compose build --pull --no-cache bigchaindb
+      - run: docker-compose up --always-recreate-deps --force-recreate -d bigchaindb
 
       - run:
           name: install dockerize
@@ -25,23 +17,20 @@ jobs:
             DOCKERIZE_VERSION: v0.6.1
       - run: dockerize -wait tcp://localhost:9984 -timeout 60s
 
-      - run:  curl http://localhost:9984
+      - run: sleep 10
+      - run: curl http://localhost:9984
 
       - run:
-          name: "Failure: output container logs to console"
+          name: "After: output container logs to console"
           command: |
               set -x
               docker-compose logs --tail="all" bigchaindb
               docker-compose logs --tail="all" tendermint
               docker-compose logs --tail="all" mongodb
-          when: on_fail
+          when: always
 
       # # - run: gem install cowsay
       # - run: sudo npm install -g codecov
       #
       # - run:  yarn
       # - run:  yarn test
-
-      - store_artifacts:
-          path: ${ARTIFACTS}
-          destination: artifacts
