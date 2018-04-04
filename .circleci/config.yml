@@ -4,7 +4,7 @@ jobs:
     working_directory: ~/app
     environment:
       ARTIFACTS: /tmp/artifacts
-    docker:
+    machine:
       - image: circleci/node:8
     steps:
       - checkout
