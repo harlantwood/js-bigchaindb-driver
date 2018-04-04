@@ -4,8 +4,8 @@ jobs:
     working_directory: ~/app
     environment:
       ARTIFACTS: /tmp/artifacts
-    machine:
-      - image: circleci/node:8
+    machine: true
+      # - image: circleci/node:8
     steps:
       - checkout
       - run: mkdir ${ARTIFACTS}
