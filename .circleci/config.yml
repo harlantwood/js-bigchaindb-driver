@@ -8,7 +8,7 @@ jobs:
       - checkout
 
       - run: docker-compose build --pull --no-cache bigchaindb
-      - run: docker-compose up --always-recreate-deps --force-recreate -d bigchaindb
+      - run: docker-compose up -d bigchaindb
 
       - run:
           name: install dockerize
